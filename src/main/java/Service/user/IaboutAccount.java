@@ -1,9 +1,5 @@
 package Service.user;
 
-import Service.UserType;
-
-import java.util.ArrayList;
-
 public interface IaboutAccount {
     public boolean  addAccount(int UID,String password);
     //如果添加成功返回true

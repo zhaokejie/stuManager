@@ -1,23 +1,19 @@
-package Service.session;
+package Service.tools;
 
-import javax.imageio.*;
-import java.io.*;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
+import javax.imageio.*;
+import javax.servlet.http.HttpSession;
+import java.io.*;
 
-//import static jdk.javadoc.internal.doclets.toolkit.util.StandardDocFileFactory.newFile;
-
-
-public class VerifyCode  extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+public class VerifyCodeTools {
+    public static int createVerifyCode(HttpSession session,OutputStream outputStream) throws IOException {
         //声明验证码
         int width = 60;
         int height = 30;
@@ -31,12 +27,12 @@ public class VerifyCode  extends HttpServlet {
         //通过graphics绘制图像
         Graphics graphics = image.getGraphics();
         // 设置颜色
-        graphics .setColor(Color.BLACK);
+        graphics.setColor(Color.BLACK);
         //填充
-        graphics .fillRect(0, 0, width, height);
+        graphics.fillRect(0, 0, width, height);
         //白色矩形，画边框
-        graphics .setColor(Color.WHITE);
-        graphics .fillRect(1, 1, width-2, height-2);
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(1, 1, width-2, height-2);
 
         /*提供缓存区域，为了存放4个随机字符，以便存入session */
         StringBuilder builder = new StringBuilder();
@@ -66,20 +62,28 @@ public class VerifyCode  extends HttpServlet {
 
         /*获得随机数据，并保存session*/
         String tempStr = builder.toString();
-        request.getSession().setAttribute("sessionCacheData",tempStr);
-        if(image==null)
-            System.out.println("验证码生成失败！");
-        else
-            System.out.println("验证码生成成功！");
+        session.setAttribute("sessionCacheData",tempStr);
 
         //生成图片发送到浏览器 ,相当于下载
-        ImageIO.write(image, "jpg", response.getOutputStream());
+        ImageIO.write(image, "jpg", outputStream);
+        if(image==null) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
         //ImageIO.write(image, "jpg", new File("G:\\yzm"));
-
-    }
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
     }
 
-
+    public boolean judgeVerifyCode(String code,HttpSession session)
+    {
+        if(code.compareTo((String)session.getAttribute("sessionCacheData")) == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
