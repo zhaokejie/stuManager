@@ -7,7 +7,7 @@ public class DBConnection {
             try {
                 Connection conn = null;
                 Class.forName("com.mysql.cj.jdbc.Driver"); //加载指定的数据库驱动程序
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_db?serverTimezone=UTC&useSSL=false",
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/stumanager_db?serverTimezone=UTC&useSSL=false",
                         "root", "Hdu1080019");
                 return conn;
             }

@@ -6,7 +6,15 @@ public class Manager extends User {
     private String Manager_Name;
     private String Manager_Sex;
     private String Manager_Tel;
+    private String Manager_Building_ID;
 
+    public String getManager_Building_ID() {
+        return Manager_Building_ID;
+    }
+
+    public void setManager_Building_ID(String ManagerBuildingID) {
+        Manager_Building_ID = ManagerBuildingID;
+    }
 
 
 

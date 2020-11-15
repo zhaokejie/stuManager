@@ -36,7 +36,12 @@ public class User {
         String tempPassword = accountTools.getPassword((UID));
 
         if (password.compareTo(accountTools.getPassword(UID)) == 0) {
-           return new User();
+
+            if(accountTools.getUserType(UID)==UserType.student){
+                return ((AccountTools) accountTools).getStudent("Where UID="+UID);
+            }
+            else
+                return ((AccountTools) accountTools).getManager("Where UID="+UID);
         }
         else{
             return null;
