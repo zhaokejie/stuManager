@@ -95,6 +95,7 @@ public class DoLogin extends HttpServlet {
         if(name.compareTo("test") == 0)
             if(password.compareTo("123456") == 0)
                 resp.setHeader("LoginState","1");
+                resp.getWriter().write("登陆成功！");
 
     }
 
@@ -110,5 +111,8 @@ public class DoLogin extends HttpServlet {
         if(name.compareTo("test") == 0)
             if(password.compareTo("123456") == 0)
                 resp.setHeader("LoginState","1");
+                resp.getWriter().write("登陆成功！");
+
+
     }
 }
