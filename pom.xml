@@ -74,6 +74,26 @@
       <version>20200518</version>
     </dependency>
 
+    <!--    添加跨域相关的依赖-->
+
+    <dependency>
+      <groupId>com.thetransactioncompany</groupId>
+      <artifactId>java-property-utils</artifactId>
+      <version>1.9.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.6.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.thetransactioncompany</groupId>
+      <artifactId>cors-filter</artifactId>
+      <version>2.5</version>
+    </dependency>
+
   </dependencies>
 
   <build>
