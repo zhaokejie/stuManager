@@ -1,6 +1,7 @@
 package Dao;
 
 
+import Service.Model.hygieneCheckRecord;
 import Service.Model.outComer;
 import Service.user.IaboutAccount;
 import Service.user.Manager;
@@ -11,7 +12,6 @@ import db.DBConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class AccountTools implements IaboutAccount {
   //  public boolean  addAccount(int UID,String password,UserType u){
@@ -172,7 +172,7 @@ public class AccountTools implements IaboutAccount {
     }
 
 
-/*
+
     public List<hygieneCheckRecord> getAllHygieneCheckRecord(String somewhere){       //查询，自定义查询条件，返回所有符合条件的卫生检查记录(列表)
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -211,7 +211,7 @@ public class AccountTools implements IaboutAccount {
         }
         return list;
     }
-*/
+
 
 
 
