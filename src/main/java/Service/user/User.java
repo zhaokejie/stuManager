@@ -3,16 +3,16 @@ package Service.user;
 import Dao.AccountTools;
 
 public class User {
-    int UID;
+    String UID;
     String username;
     String password;
     UserType userType;
 
-      public int getUID() {
+      public String getUID() {
              return UID;
      }
 
-     public void setUID(int uid) {
+     public void setUID(String uid) {
              UID=uid;
 }
     public String getUsername() {

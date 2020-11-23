@@ -1,7 +1,7 @@
 package Service.user;
 
 public interface IaboutAccount {
-    public boolean  addAccount(int UID,String password,UserType u);
+    //public boolean  addAccount(int UID,String password,UserType u);
     //如果添加成功返回true
     public String getPassword(int UID);
     //返回账户的密码,若不存在返回“-1”
