@@ -5,6 +5,7 @@ import Service.user.IaboutAccount;
 import Service.user.Manager;
 import Service.user.Student;
 import Service.user.UserType;
+import Service.Model.*;
 import db.DBConnection;
 
 import java.sql.*;
@@ -128,6 +129,89 @@ public class AccountTools implements IaboutAccount {
 
 
 
+    public List<outComer> getAllOutComer(String somewhere){       //查询，自定义查询条件，返回符合条件的所有外来人员(外来人员列表)
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+        //Student oneStudent=null;
+        List<outComer> list = new ArrayList<outComer>();
+        try {
+            con = DBConnection.getDBconnection();
+            if(con==null){
+                System.out.println("连接数据库失败");
+            }
+            else {
+
+                // 执行SQL语句
+                prepStmt = con.prepareStatement("select * from stumanager_db.outcomer_table "+somewhere);
+                // prepStmt = con.prepareStatement("select * from stumanager_db.student_table");
+                rs = prepStmt.executeQuery();
+                while (rs.next()) {
+                    outComer oneOutComer = new outComer();
+                    //下面根据数据库具体的定义情况来
+                    oneOutComer.setName(rs.getString(2));
+                    oneOutComer.setSex(rs.getString(3));
+                    oneOutComer.setTel(rs.getString(4));
+                    oneOutComer.setReason(rs.getString(5));
+                    oneOutComer.setComeTime(rs.getString(6));
+                    oneOutComer.setLeaveTime(rs.getString(7));
+                    oneOutComer.setConnectStudentID(rs.getString(8));
+                    oneOutComer.setConnectStudentName(rs.getString(9));
+                    oneOutComer.setConnectBuildingID(rs.getString(10));
+                    list.add(oneOutComer);
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeDB(con, prepStmt, rs);
+        }
+        return list;
+    }
+
+
+
+    public List<hygieneCheckRecord> getAllHygieneCheckRecord(String somewhere){       //查询，自定义查询条件，返回所有符合条件的卫生检查记录(列表)
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+        //Student oneStudent=null;
+        List<hygieneCheckRecord> list = new ArrayList<hygieneCheckRecord>();
+        try {
+            con = DBConnection.getDBconnection();
+            if(con==null){
+                System.out.println("连接数据库失败");
+            }
+            else {
+
+                // 执行SQL语句
+                prepStmt = con.prepareStatement("SELECT * FROM stumanager_db.hygienecheckrecord_table "+somewhere);
+                // prepStmt = con.prepareStatement("select * from stumanager_db.student_table");
+                rs = prepStmt.executeQuery();
+                while (rs.next()) {
+                    hygieneCheckRecord oneRecord = new hygieneCheckRecord();
+                    //下面根据数据库具体的定义情况来
+                    oneRecord.setBuilding_ID(rs.getString(2));//学号
+                    oneRecord.setDormitoryID(rs.getString(3));//寝室号
+                    oneRecord.setCheckDate(rs.getString(4));//寝室号
+                    oneRecord.setScore(rs.getString(5));//学号就是用户名
+                    oneRecord.setProblem(rs.getString(6));//密码
+                    oneRecord.setRecorder(rs.getString(7));
+
+                    list.add(oneRecord);
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeDB(con, prepStmt, rs);
+        }
+        return list;
+    }
+
+
 
 
 
@@ -162,10 +246,10 @@ public class AccountTools implements IaboutAccount {
     }
 
 
-    public UserType getUserType(int UID){
+    public UserType getUserType(String uid){  //根据用户名返回用户类型
 
 
-        String somewhere="Where UID=uid";
+        String somewhere="Where UID="+uid;
         Student stu=getStudent(somewhere);
         Manager man=getManager(somewhere);
         if(stu!=null) {
@@ -179,8 +263,36 @@ public class AccountTools implements IaboutAccount {
     }
     //返回用户的类型学生 or 管理员
 
+    public boolean checkUsername(String uid) {     //检查用户名是否存在
 
-    public String getPassword(int uid) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+        Student resultStudent=null;
+        try {
+            con = DBConnection.getDBconnection();
+            Statement stmt = con.createStatement();
+
+            // 执行SQL语句
+            rs = stmt.executeQuery("select * from stumanager_db.student_table Where UID="+uid);
+            // prepStmt = con.prepareStatement("SELECT * FROM stumanager_db.student_table"+somewhere);
+            // rs = prepStmt.executeQuery();
+            if(rs.next()) {
+
+                //下面根据数据库具体的定义情况来
+              return true;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.closeDB(con, prepStmt, rs);
+        }
+        return false;
+    }
+
+
+    public String getPassword(String uid) {   //根据用户名得到密码
        if(getUserType(uid)==UserType.student){
            Student s=getStudent("Where UID="+uid);
            return s.getpassword();
@@ -196,7 +308,7 @@ public class AccountTools implements IaboutAccount {
        // return resultStudent;
     //返回账户的密码,若不存在返回“-1”
 
-    public boolean changePassword(int UID,String newPassword){
+    public boolean changePassword(String UID,String newPassword){   //修改密码
 
       if (getPassword(UID)!=null) {
           if (getUserType(UID) == UserType.student) {

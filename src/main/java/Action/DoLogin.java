@@ -1,5 +1,7 @@
 package Action;
 
+import Service.Login_temp;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,15 +90,25 @@ public class DoLogin extends HttpServlet {
         byte[] bytes = new byte[1000];
         req.getInputStream().read(bytes);
         System.out.println(new String(bytes));
-
         String name = req.getParameter("uname");
         String password = req.getParameter("pwd");
-        resp.setHeader("LoginState","0");
-        if(name.compareTo("test") == 0)
-            if(password.compareTo("123456") == 0)
-                resp.setHeader("LoginState","1");
-                resp.getWriter().write("登陆成功！");
+        resp.setHeader("LoginState", "0");
+        HttpSession session = req.getSession();
 
+        if (Login_temp.LoginServlet(name, password, session)) {
+            resp.setHeader("LoginState", "1");
+            resp.getWriter().write("登陆成功！");
+        } else {
+            resp.getWriter().write("登陆失败！");
+        }
+      /*  String name = req.getParameter("uname");
+        String password = req.getParameter("pwd");
+        resp.setHeader("LoginState", "0");
+        if (name.compareTo("test") == 0)
+            if (password.compareTo("123456") == 0)
+                resp.setHeader("LoginState", "1");
+        resp.getWriter().write("登陆成功！");
+*/
     }
 
     /**
@@ -107,12 +119,22 @@ public class DoLogin extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
         String name = req.getParameter("uname");
         String password = req.getParameter("pwd");
-        resp.setHeader("LoginState","0");
-        if(name.compareTo("test") == 0)
+        resp.setHeader("LoginState", "0");
+        HttpSession session = req.getSession();
+
+        if (Login_temp.LoginServlet(name, password, session)) {
+            resp.setHeader("LoginState", "1");
+            resp.getWriter().write("登陆成功！");
+        } else {
+            resp.getWriter().write("登陆失败！");
+        }
+      /*  if(name.compareTo("test") == 0)
             if(password.compareTo("123456") == 0)
                 resp.setHeader("LoginState","1");
                 resp.getWriter().write("登陆成功！");
 
 
+    }
+    */
     }
 }

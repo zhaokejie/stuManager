@@ -31,11 +31,11 @@ public class User {
         password = Password;
     }
 //    static Methods
-    public static User tryLogin(int UID,String password) {
+    public static User tryLogin(String UID,String password) {
         IaboutAccount accountTools = new AccountTools();
         String tempPassword = accountTools.getPassword((UID));
 
-        if (password.compareTo(accountTools.getPassword(UID)) == 0) {
+        if (password.compareTo(tempPassword) == 0) {
 
             if(accountTools.getUserType(UID)==UserType.student){
                 return ((AccountTools) accountTools).getStudent("Where UID="+UID);
