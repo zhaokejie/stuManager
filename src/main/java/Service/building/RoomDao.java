@@ -1,17 +1,14 @@
 package Service.building;
 
 import Service.user.Account;
+
+import java.util.HashMap;
 import java.util.List;
 
 public interface RoomDao {
 
-    /**
-     * 根据id查询用户信息
-     *
-     * @param id
-     * @return
-     */
-    public Room getRoomById(int id);
+
+    public Room getRoomById(HashMap map);
 
 
 
@@ -22,6 +19,9 @@ public interface RoomDao {
      * @return
      */
     public List<Room> getRoomAll();
+
+
+
 
     /**
      * 新增用户
@@ -43,4 +43,6 @@ public interface RoomDao {
      * @param id
      */
     public void deleteRoom(int id);
+
+
 }

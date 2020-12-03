@@ -43,28 +43,14 @@ public class Account {
 
     public static Account LoginService(int ID, String passWord) throws IOException {
 
-        SqlSession sqlSession;
-        String resource = "mybatis-config.xml";
-
-        resource = "mybatis-config.xml";
-        // mybatis-config.xml
-
-        // 读取配置文件
-        InputStream is = Resources.getResourceAsStream(resource);
-
-        // 构建SqlSessionFactory
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
-
-        // 获取sqlSession
-        sqlSession = sqlSessionFactory.openSession();
-
 
         AccountDao accountDao;
-//        MyBatisConnect myBatisConnect = new MyBatisConnect();
-//        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
         accountDao = new AccountDaoImpl(sqlSession);
         //判断用户名密码是否匹配
         Account tempAccount = accountDao.getAccountById(ID);
+        myBatisConnect.closeSqlSession();
         if(tempAccount == null)
         {
             return null;

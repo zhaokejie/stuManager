@@ -7,6 +7,7 @@ import Service.user.Student;
 import Service.user.StudentDao;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
@@ -26,6 +27,13 @@ public class StudentDaoImpl implements StudentDao {
     public List<Student> getStuInfoAll() {
         return this.sqlSession.selectList("StudentDao.getStuInfoAll");
     }
+
+    @Override
+    public List<Student> getStuInfoByRoomId(HashMap map) {
+        return this.sqlSession.selectList("StudentDao.getStuInfoByRoomId",map);
+    }
+
+
 
     @Override
     public void insertStuInfo(Student student) {

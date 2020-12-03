@@ -3,6 +3,7 @@ package Service.user;
 import Dao.StudentDaoImpl;
 import Dao.MyBatisConnect;
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -25,7 +26,24 @@ public class Student{
         SqlSession sqlSession = myBatisConnect.getSqlSession();
         studentDao = new StudentDaoImpl(sqlSession);
         Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
         return student;
+    }
+
+    public static JSONObject getStuJSON(Student student)
+    {
+        JSONObject json = new JSONObject();
+        json.put("ID",student.getId());
+        json.put("name",student.getName());
+        json.put("classId",student.getClassId());
+        json.put("mobilePhone",student.getMobilePhone());
+        json.put("buildingId",student.getBuildingId());
+        json.put("roomId",student.getRoomId());
+        json.put("Email",student.getEmail());
+        json.put("homeAddress",student.getHomeAddress());
+        json.put("cardBalance",student.getCardBalance());
+
+        return json;
     }
 
 

@@ -24,6 +24,23 @@
 
    </select>
 
+    <select id="getStuInfoByRoomId" resultType="Service.user.Student">
+      select
+       ID as ID,
+       name as name,
+       classId as classId,
+       mobilePhone as mobilePhone,
+       buildingId as buildingId,
+       Email as Email,
+       roomId as roomId,
+       homeAddress as homeAddress,
+       cardBalance as cardBalance
+       from
+        StuInfo
+       where roomId = #{roomId} and buildingId = #{buildingId};
+
+   </select>
+
 
 
     <select id="getStuInfoAll" resultType="Service.user.Student">

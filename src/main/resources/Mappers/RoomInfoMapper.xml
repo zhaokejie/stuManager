@@ -10,12 +10,13 @@
     <select id="getRoomById" resultType="Service.building.Room">
       select
        ID as ID,
+       buildingId as buildingId,
        healthScore as healthScore,
        electricityBalance as electricityBalance,
        waterBalance as waterBalance
        from
         StuRoom
-       where ID = #{ID};
+       where ID = #{roomId} and buildingId = #{buildingId};
    </select>
 
 
@@ -26,7 +27,8 @@
     <!--插入数据-->
     <insert id="insertRoom" parameterType="Service.building.Room">
         INSERT INTO StuRoom (
-        ID
+        ID,
+        buildingId,
         healthScore,
         electricityBalance,
         waterBalance
@@ -34,6 +36,7 @@
         VALUES
         (
         #{ID},
+        #{buildingId},
         #{healthScore},
         #{electricityBalance},
         #{waterBalance}
@@ -43,6 +46,7 @@
     <update id="updateRoom" parameterType="Service.building.Room">
         UPDATE StuRoom
         <trim prefix="set" suffixOverrides=",">
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
             <if test="healthScore!=null">healthScore = #{healthScore},</if>
             <if test="electricityBalance!=null">electricityBalance = #{electricityBalance},</if>
             <if test="waterBalance!=null">waterBalance = #{waterBalance}</if>

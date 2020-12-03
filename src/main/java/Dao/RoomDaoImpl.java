@@ -4,6 +4,7 @@ import Service.building.Room;
 import Service.building.RoomDao;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RoomDaoImpl implements RoomDao {
@@ -16,10 +17,6 @@ public class RoomDaoImpl implements RoomDao {
 
 
 
-    @Override
-    public Room getRoomById(int id) {
-        return this.sqlSession.selectOne("RoomDao.getRoomById", id);
-    }
 
     @Override
     public List<Room> getRoomAll() {
@@ -40,4 +37,10 @@ public class RoomDaoImpl implements RoomDao {
     public void deleteRoom(int id) {
         this.sqlSession.delete("RoomDao.deleteRoom",id);
     }
+
+    @Override
+    public Room getRoomById(HashMap map) {
+        return this.sqlSession.selectOne("RoomDao.getRoomById",map);
+    }
+
 }

@@ -1,6 +1,8 @@
 package Service.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface StudentDao {
 
@@ -21,6 +23,9 @@ public interface StudentDao {
      * @return
      */
     public List<Student> getStuInfoAll();
+
+    public List<Student> getStuInfoByRoomId(HashMap map);
+
 
     /**
      * 新增用户
