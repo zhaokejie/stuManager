@@ -1,124 +1,108 @@
 package Service.user;
 
-public class Student extends User {
+import Dao.StudentDaoImpl;
+import Dao.MyBatisConnect;
+import org.apache.ibatis.session.SqlSession;
 
-    private String Student_Building_ID;//寝室楼号
-    private String Student_DormitoryID;//寝室号
-    private String Student_Name;
-    private String Student_Sex;
-    private String Student_Class;
-    private String Student_State;
-    private String Student_Tel;
+import java.io.IOException;
 
+public class Student{
 
-    public String getStudent_Building_ID() {
-        return Student_Building_ID;
-    }
-
-    public void setStudent_Building_ID(String student_building_id) {
-        Student_Building_ID = student_building_id;
-    }
-
-
-    public String getStudent_DormitoryID() {
-        return Student_DormitoryID;
-    }
-
-    public void setStudent_DormitoryID(String studentDormitoryID) {
-        Student_DormitoryID = studentDormitoryID;
-    }
+    private int ID;
+    private String name;
+    private String classId;
+    private String mobilePhone;
+    private String buildingId;
+    private String roomId;
+    private String Email;
+    private String homeAddress;
+    private int cardBalance;
 
 
-    public String getStudent_Name() {
-        return Student_Name;
-    }
-
-    public void setStudent_Name(String studentName) {
-        Student_Name = studentName;
-    }
-
-    public String getStudent_Sex() {
-        return Student_Sex;
-    }
-
-    public void setStudent_Sex(String studentSex) {
-        Student_Sex = studentSex;
-    }
-
-    public String getStudent_Class() {
-        return Student_Class;
-    }
-
-    public void setStudent_Class(String studentClass) {
-        Student_Class = studentClass;
-    }
-
-    public String getStudent_State() {
-        return Student_State;
-    }
-
-    public void setStudent_State(String studentState) {
-        Student_State = studentState;
-    }
-
-    public String getStudent_Tel() {
-        return Student_Tel;
-    }
-
-    public void setStudent_Tel(String studentTel) {
-        Student_Tel = studentTel;
+    public static Student getStudentByID(int ID) throws IOException {
+        StudentDao studentDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        studentDao = new StudentDaoImpl(sqlSession);
+        Student student = studentDao.getStuInfoById(ID);
+        return student;
     }
 
 
-/*
-    //下面这些用不到可以注释掉
-    private String Dormitory_Name;
-    private String Building_Name;
 
-    public String getDormitory_Name() {
-        return Dormitory_Name;
+    public int getId() {
+        return ID;
     }
 
-    public void setDormitory_Name(String dormitoryName) {
-        Dormitory_Name = dormitoryName;
+    public void setId(int id) {
+        this.ID = id;
     }
 
-    public String getBuilding_Name() {
-        return Building_Name;
+    public String getName() {
+        return name;
     }
 
-    public void setBuilding_Name(String buildingName) {
-        Building_Name = buildingName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private String Dormitory_Type;
-    private String Dormitory_Number;
-    private String Dormitory_Tel;
-
-    public String getDormitory_Type() {
-        return Dormitory_Type;
+    public String getClassId() {
+        return classId;
     }
 
-    public void setDormitory_Type(String dormitoryType) {
-        Dormitory_Type = dormitoryType;
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 
-    public String getDormitory_Number() {
-        return Dormitory_Number;
+    public String getMobilePhone() {
+        return mobilePhone;
     }
 
-    public void setDormitory_Number(String dormitoryNumber) {
-        Dormitory_Number = dormitoryNumber;
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
 
-    public String getDormitory_Tel() {
-        return Dormitory_Tel;
+    public String getBuildingId() {
+        return buildingId;
     }
 
-    public void setDormitory_Tel(String dormitoryTel) {
-        Dormitory_Tel = dormitoryTel;
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 
-}  */
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public int getCardBalance() {
+        return cardBalance;
+    }
+
+    public void setCardBalance(int cardBalance) {
+        this.cardBalance = cardBalance;
+    }
+
+
+
 
 }

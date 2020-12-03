@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="StudentDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getStuInfoById" resultType="Service.user.Student">
+      select
+       ID as ID,
+       name as name,
+       classId as classId,
+       mobilePhone as mobilePhone,
+       buildingId as buildingId,
+       Email as Email,
+       roomId as roomId,
+       homeAddress as homeAddress,
+       cardBalance as cardBalance
+       from
+        StuInfo
+       where ID = #{ID};
+
+   </select>
+
+
+
+    <select id="getStuInfoAll" resultType="Service.user.Student">
+        select * from StuInfo;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertStuInfo" parameterType="Service.user.Student">
+        INSERT INTO StuInfo (
+        ID,
+        name,
+        Email,
+        classId,
+        mobilePhone,
+        buildingId,
+        roomId,
+        homeAddress,
+        cardBalance
+
+        )
+        VALUES
+        (
+        #{ID},
+        #{name},
+        #{Email},
+        #{classId},
+        #{mobilePhone},
+        #{buildingId},
+        #{roomId},
+        #{homeAddress},
+        #{cardBalance}
+        );
+    </insert>
+
+    <update id="updateStuInfo" parameterType="Service.user.Student">
+        UPDATE StuInfo
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">classId = #{name},</if>
+            <if test="classId!=null">classId = #{classId},</if>
+            <if test="mobilePhone!=null">mobilePhone = #{mobilePhone},</if>
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="roomId!=null">roomId = #{roomId},</if>
+            <if test="Email!=null">Email = #{Email},</if>
+            <if test="homeAddress!=null">homeAddress = #{homeAddress},</if>
+            <if test="cardBalance!=null">cardBalance = #{cardBalance}</if>
+        </trim>
+        WHERE
+        (ID = #{ID});
+    </update>
+
+    <delete id="deleteStuInfo" >
+        delete from StuInfo where ID=#{ID}
+    </delete>
+</mapper>

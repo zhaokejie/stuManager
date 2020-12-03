@@ -20,9 +20,9 @@ public class DBConnection {
 
         public static void closeDB(Connection conn,PreparedStatement pstm,ResultSet rs) {
             try {
-                if(rs!=null) rs.close();
-                if(pstm!=null) pstm.close();
-                if(conn!=null) conn.close();
+                if (rs != null) rs.close();
+                if (pstm != null) pstm.close();
+                if (conn != null) conn.close();
             }
             catch(SQLException e) {
                 e.printStackTrace();

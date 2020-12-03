@@ -1,6 +1,6 @@
 package Service.user;
 
-public class Manager extends User {
+public class Manager {
 
 
     private String Manager_Name;

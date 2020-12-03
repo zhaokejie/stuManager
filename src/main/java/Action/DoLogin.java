@@ -1,6 +1,8 @@
 package Action;
 
-import Service.Login_temp;
+import Service.session.SessionsManager;
+import Service.user.Account;
+import Service.user.Student;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -87,28 +89,35 @@ public class DoLogin extends HttpServlet {
 
         //临时测试的代码：
         resp.setCharacterEncoding("utf-8");
+        req.setCharacterEncoding("utf-8");
         byte[] bytes = new byte[1000];
         req.getInputStream().read(bytes);
         System.out.println(new String(bytes));
+        resp.setHeader("Access-Control-Expose-Headers","LoginState");
+        resp.setHeader("Access-Control-Expose-Headers","Set-Cookie");
+
         String name = req.getParameter("uname");
         String password = req.getParameter("pwd");
-        resp.setHeader("LoginState", "0");
-        HttpSession session = req.getSession();
+        String identity = req.getParameter("identity");
+        resp.setHeader("LoginState","0");
+        Account account = Account.LoginService(Integer.parseInt(name),password);
+        if(account != null)
+            {
+                resp.setHeader("LoginState",identity);
+                Student aStudent = Student.getStudentByID(account.getID());
 
-        if (Login_temp.LoginServlet(name, password, session)) {
-            resp.setHeader("LoginState", "1");
-            resp.getWriter().write("登陆成功！");
-        } else {
-            resp.getWriter().write("登陆失败！");
+                SessionsManager.removeSession(name);
+                HttpSession hs = req.getSession();
+                SessionsManager.addSession(name, hs);
+                System.out.println("SESSIONid:  "+hs.getId());
+                hs.setMaxInactiveInterval(1*60*60);
+                hs.setAttribute("aStudent",aStudent);
+            }
+        else
+        {
+            resp.setHeader("LoginState","0");
         }
-      /*  String name = req.getParameter("uname");
-        String password = req.getParameter("pwd");
-        resp.setHeader("LoginState", "0");
-        if (name.compareTo("test") == 0)
-            if (password.compareTo("123456") == 0)
-                resp.setHeader("LoginState", "1");
-        resp.getWriter().write("登陆成功！");
-*/
+
     }
 
     /**
@@ -117,24 +126,36 @@ public class DoLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("utf-8");
+        req.setCharacterEncoding("utf-8");
         String name = req.getParameter("uname");
         String password = req.getParameter("pwd");
-        resp.setHeader("LoginState", "0");
-        HttpSession session = req.getSession();
+        String identity = req.getParameter("identity");
+        resp.setHeader("Access-Control-Expose-Headers","LoginState");
+        resp.setHeader("Access-Control-Expose-Headers","Set-Cookie");
 
-        if (Login_temp.LoginServlet(name, password, session)) {
-            resp.setHeader("LoginState", "1");
-            resp.getWriter().write("登陆成功！");
-        } else {
-            resp.getWriter().write("登陆失败！");
+        resp.setHeader("LoginState","0");
+
+
+
+        Account account = Account.LoginService(Integer.parseInt(name),password);
+        if(account != null)
+        {
+            resp.setHeader("LoginState",identity);
+            Student aStudent = Student.getStudentByID(account.getID());
+
+            SessionsManager.removeSession(name);
+            HttpSession hs = req.getSession();
+            SessionsManager.addSession(name, hs);
+            System.out.println("SESSIONid:  "+hs.getId());
+            hs.setMaxInactiveInterval(1*60*60);
+            hs.setAttribute("aStudent",aStudent);
         }
-      /*  if(name.compareTo("test") == 0)
-            if(password.compareTo("123456") == 0)
-                resp.setHeader("LoginState","1");
-                resp.getWriter().write("登陆成功！");
+        else
+        {
+            resp.setHeader("LoginState","0");
+        }
 
 
-    }
-    */
+
     }
 }

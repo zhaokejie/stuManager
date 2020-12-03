@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="RoomDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getRoomById" resultType="Service.building.Room">
+      select
+       ID as ID,
+       healthScore as healthScore,
+       electricityBalance as electricityBalance,
+       waterBalance as waterBalance
+       from
+        StuRoom
+       where ID = #{ID};
+   </select>
+
+
+    <select id="getRoomAll" resultType="Service.building.Room">
+        select * from StuRoom;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertRoom" parameterType="Service.building.Room">
+        INSERT INTO StuRoom (
+        ID
+        healthScore,
+        electricityBalance,
+        waterBalance
+        )
+        VALUES
+        (
+        #{ID},
+        #{healthScore},
+        #{electricityBalance},
+        #{waterBalance}
+        );
+    </insert>
+
+    <update id="updateRoom" parameterType="Service.building.Room">
+        UPDATE StuRoom
+        <trim prefix="set" suffixOverrides=",">
+            <if test="healthScore!=null">healthScore = #{healthScore},</if>
+            <if test="electricityBalance!=null">electricityBalance = #{electricityBalance},</if>
+            <if test="waterBalance!=null">waterBalance = #{waterBalance}</if>
+        </trim>
+        WHERE
+        (ID = #{ID});
+    </update>
+
+    <delete id="deleteRoom" >
+        delete from StuRoom where ID=#{ID}
+    </delete>
+</mapper>
