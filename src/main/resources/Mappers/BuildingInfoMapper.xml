@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>    <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="BuildingDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getBuildingById" resultType="Service.building.Building">
+      select
+       ID as ID,
+       ManagerID as ManagerID,
+       password as password,
+       BuildingSex as BuildingSex
+       from
+        StuBuilding    <!--建一个寝室楼表-->
+       where ID = #{ID};    <!--根据寝室楼号查询该楼-->
+   </select>
+
+
+    <select id="getBuildingAll" resultType="Service.building.Building">
+        select * from StuBuilding;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertBuilding" parameterType="Service.building.Building">
+        INSERT INTO StuBuilding (
+        ID,
+        ManagerID,
+        password,
+        BuildingSex
+        )
+        VALUES
+        (
+        #{ID},
+        #{ManagerID},
+        #{password},
+        #{BuildingSex}
+        );
+    </insert>
+
+    <update id="updateBuilding" parameterType="Service.building.Building">
+        UPDATE StuBuilding
+        <trim prefix="set" suffixOverrides=",">
+            <if test="ID!=null">ID = #{ID},</if>
+            <if test="ManagerID!=null">ManagerID = #{ManagerID},</if>
+            <if test="password!=null">password = #{password},</if>
+            <if test="BuildingSex!=null">BuildingSex = #{BuildingSex}</if>
+        </trim>
+        WHERE
+        (ID = #{ID});
+    </update>
+
+    <delete id="deleteBuilding" >
+        delete from StuBuilding where ID=#{ID}   <!--根据寝室楼号删除该楼-->
+    </delete>
+</mapper>

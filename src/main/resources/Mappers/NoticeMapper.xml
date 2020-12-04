@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="NoticeDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getNoticeById" resultType="Service.notice.Notice">  <!-- 根据楼号和发布日期来查询特定的通知  -->
+      select
+
+       buildingId as buildingId,
+       releaseDate as releaseDate,
+       content as content
+       from
+        StuNotice
+       where buildingId = #{buildingId} and releaseDate=#{releaseDate};
+   </select>
+
+
+    <select id="getBuildingAll" resultType="Service.notice.Notice">
+        select * from StuNotice;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertNotice" parameterType="Service.notice.Notice">
+        INSERT INTO StuRoom (
+
+        buildingId,
+        releaseDate,
+        content
+        )
+        VALUES
+        (
+        #{buildingId},
+        #{releaseDate},
+        #{content}
+        );
+    </insert>
+
+    <update id="updateNotice" parameterType="Service.notice.Notice">
+        UPDATE StuNotice
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="releaseDate!=null">releaseDate = #{releaseDate},</if>
+            <if test="content!=null">content = #{content}</if>
+        </trim>
+        WHERE
+        ( buildingId= #{buildingId} and releaseDate= #{releaseDate});
+    </update>
+
+    <delete id="deleteNotice" >
+        delete from StuNotice where releaseDate= #{releaseDate};    <!--根据发布日期删除通知-->
+    </delete>
+</mapper>
