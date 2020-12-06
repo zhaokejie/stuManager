@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="HealthScoreDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getHealthScoreById" resultType="Service.healthScore.HealthScore">  <!-- 根据楼号和发布日期来查询特定的通知  -->
+      select
+
+       buildingId as buildingId,
+       roomId as roomId,
+       score as score,
+       recordDate as recordDate
+       from
+        StuHealthScore
+       where buildingId = #{buildingId} and roomId=#{roomId} and recordDate=#{recordDate};
+   </select>
+
+
+    <select id="getHealthScoreAll" resultType="Service.healthScore.HealthScore">
+        select * from StuHealthScore  where buildingId = #{buildingId} and roomId=#{roomId};
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertHealthScore" parameterType="Service.healthScore.HealthScore">
+        INSERT INTO StuHealthScore (
+
+        buildingId,
+        roomId,
+        score,
+        recordDate
+        )
+        VALUES
+        (
+        #{buildingId},
+        #{roomId},
+        #{score},
+        #{recordDate}
+        );
+    </insert>
+
+    <update id="updateHealthScore" parameterType="Service.healthScore.HealthScore">
+        UPDATE StuHealthScore
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="roomId!=null">roomId = #{roomId},</if>
+            <if test="score!=null">score = #{score},</if>
+            <if test="recordDate!=null">recordDate = #{recordDate}</if>
+        </trim>
+        WHERE
+        ( buildingId= #{buildingId} and roomId=#{roomId} and recordDate= #{recordDate});  <!-- 根据寝室号和记录日期来更新卫生记录 -->
+    </update>
+
+    <delete id="deleteHealthScore" >
+        delete from StuHealthScore where  roomId=#{roomId} and recordDate= #{recordDate};    <!--根据寝室号，记录日期删除卫生记录-->
+    </delete>
+</mapper>

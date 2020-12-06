@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="RepairRecordDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getRepairRecordById" resultType="Service.repairRecord.RepairRecord">
+    <!--  select
+       stuId as stuId,
+       buildingId as buildingId,
+       roomId as roomId,
+       reason as reason,
+       RecordDate as RecordDate
+       from
+        StuRepairRecord
+        -->
+      select * from StuRepairRecord where roomId = #{roomId} and buildingId = #{buildingId};
+   </select>
+
+
+    <select id="getRepairRecordAll" resultType="Service.repairRecord.RepairRecord">
+        select * from StuRepairRecord;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertRepairRecord" parameterType="Service.repairRecord.RepairRecord">
+        INSERT INTO StuRepairRecord(
+          stuId,
+          buildingId,
+          roomId,
+          reason,
+          RecordDate
+        )
+        VALUES
+        (
+          #{stuId},
+          #{buildingId},
+          #{roomId},
+          #{reason},
+          #{RecordDate}
+        );
+    </insert>
+
+    <update id="updateRepairRecord" parameterType="Service.repairRecord.RepairRecord">
+        UPDATE StuRepairRecord
+        <trim prefix="set" suffixOverrides=",">
+            <if test="stuId!=null">stuId = #{stuId},</if>
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="roomId!=null">roomId = #{roomId},</if>
+            <if test="reason!=null">reason = #{reason},</if>
+            <if test="RecordDate!=null">RecordDate = #{RecordDate}</if>
+        </trim>
+        WHERE
+        (buildingId = #{buildingId} and roomId = #{roomId});
+    </update>
+
+    <delete id="deleteRepairRecord" >
+        delete from StuRepairRecord where buildingId = #{buildingId} and roomId = #{roomId} and RecordDate = #{RecordDate}
+    </delete>
+</mapper>

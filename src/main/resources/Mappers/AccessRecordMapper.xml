@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="AccessRecordDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getAccessRecordById" resultType="Service.accessRecord.AccessRecord">
+      select
+       stuId as stuId,
+       outDate as outDate,
+       outReason as outReason,
+       comeDate as comeDate
+       from
+        StuAccessRecord
+       where stuId = #{stuId};
+   </select>
+
+
+    <select id="getAccessRecordAll" resultType="Service.accessRecord.AccessRecord">
+        select * from StuAccessRecord;
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertAccessRecord" parameterType="Service.accessRecord.AccessRecord">
+        INSERT INTO StuAccessRecord (
+        stuId,
+        outDate,
+        outReason,
+        comeDate
+        )
+        VALUES
+        (
+        #{stuId},
+        #{outDate},
+        #{outReason},
+        #{comeDate}
+        );
+    </insert>
+
+    <update id="updateAccessRecord" parameterType="Service.accessRecord.AccessRecord">
+        UPDATE StuAccessRecord
+        <trim prefix="set" suffixOverrides=",">
+            <if test="stuId!=null">stuId = #{stuId},</if>
+            <if test="outDate!=null">outDate = #{outDate},</if>
+            <if test="outReason!=null">outReason ={outReason},</if>
+            <if test="comeDate!=null">comeDate = #{comeDate}</if>
+        </trim>
+        WHERE
+        (stuId = #{stuId});
+    </update>
+
+    <delete id="deleteAccessRecord" >
+        delete from StuAccessRecord where stuId=#{stuId}
+    </delete>
+</mapper>

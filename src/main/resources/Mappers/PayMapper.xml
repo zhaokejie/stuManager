@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="PayDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getPayById" resultType="Service.pay.Pay">
+      select
+
+       buildingId as buildingId,
+       roomId as roomId,
+       cost as cost,
+       payType as payType,
+       payDate as payDate
+       from
+        StuPay
+       where roomId = #{roomId} and buildingId = #{buildingId} and payType=#{payType} and payDate=#{payDate};   <!--应该实现何种功能,根据哪几个参数来查找费用? -->
+   </select>
+
+
+    <select id="getPayAll" resultType="Service.pay.Pay">
+        select * from StuPay  where roomId = #{roomId} and buildingId = #{buildingId};
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertPay" parameterType="Service.pay.Pay">
+        INSERT INTO StuPay(
+          buildingId,
+          roomId,
+          cost,
+          payType,
+          payDate
+        )
+        VALUES
+        (
+          #{buildingId},
+          #{roomId},
+          #{cost},
+          #{payType},
+          #{payDate}
+        );
+    </insert>
+
+    <update id="updatePay" parameterType="Service.pay.Pay">
+        UPDATE StuPay
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="roomId!=null">roomId = #{roomId},</if>
+            <if test="cost!=null">cost = #{cost},</if>
+            <if test="payType!=null">payType = #{payType},</if>
+            <if test="payDate!=null">payDate = #{payDate}</if>
+        </trim>
+        WHERE
+        (buildingId = #{buildingId} and roomId = #{roomId});
+    </update>
+
+    <delete id="deletePay" >
+        delete from StuPay where buildingId = #{buildingId} and roomId = #{roomId} and payDate = #{payDate}
+    </delete>
+</mapper>
