@@ -46,6 +46,18 @@ public class Student{
         return json;
     }
 
+    public static boolean updateStuInfo(Student student) throws IOException {
+        StudentDao studentDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        studentDao = new StudentDaoImpl(sqlSession);
+        studentDao.updateStuInfo(student);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
 
 
     public int getId() {

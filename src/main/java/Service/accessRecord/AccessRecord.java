@@ -44,6 +44,18 @@ public class AccessRecord {
         return accessRecordList;
     }
 
+    public static boolean insertAccessRecord(AccessRecord accessRecord) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        AccessRecordDao accessRecordDao = new AccessRecordDaoImpl(sqlSession);
+
+        accessRecordDao.insertAccessRecord(accessRecord);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+    }
+
     public static JSONObject getRecordJSON(AccessRecord accessRecord)
     {
         JSONObject json = new JSONObject();
