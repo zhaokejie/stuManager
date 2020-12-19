@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,7 +22,12 @@ public class VerifyCode  extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        VerifyCodeTools.createVerifyCode(request.getSession(),response.getOutputStream());
+        HttpSession session = request.getSession();
+        VerifyCodeTools.createVerifyCode(session,response.getOutputStream());
+        String VerifyCode = (String) session.getAttribute("sessionCacheData");
+        response.setHeader("Access-Control-Expose-Headers","vCode");
+        response.setHeader("vCode",VerifyCode);
+
 
 
 

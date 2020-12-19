@@ -18,6 +18,17 @@
        where buildingId = #{buildingId} and releaseDate=#{releaseDate};
    </select>
 
+    <select id="getNoticeByBuildingId" resultType="Service.notice.Notice">  <!-- 根据楼号和发布日期来查询特定的通知  -->
+        select
+
+        buildingId as buildingId,
+        releaseDate as releaseDate,
+        content as content
+        from
+        StuNotice
+        where buildingId = #{buildingId};
+    </select>
+
 
     <select id="getBuildingAll" resultType="Service.notice.Notice">
         select * from StuNotice;

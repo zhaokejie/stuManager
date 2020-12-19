@@ -19,7 +19,7 @@ public class StudentRoom extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Access-Control-Expose-Headers","ifOnline");
-        response.setHeader("Access-Control-Expose-Headers","Set-Cookie");
+
         if(httpSession == null)
         {
             response.setHeader("ifOnline","0");
@@ -40,7 +40,7 @@ public class StudentRoom extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Access-Control-Expose-Headers","ifOnline");
-        response.setHeader("Access-Control-Expose-Headers","Set-Cookie");
+
         if(httpSession == null)
         {
             response.setHeader("ifOnline","0");

@@ -25,6 +25,11 @@ public class NoticeDaoImpl  implements NoticeDao{
     }
 
     @Override
+    public List<Notice> getBuildingNoticeAll(String buildingId) {
+        return this.sqlSession.selectList("getNoticeByBuildingId",buildingId);
+    }
+
+    @Override
     public void insertNotice(Notice notice) { this.sqlSession.insert("NoticeDao.insertNotice",notice); }
 
     @Override

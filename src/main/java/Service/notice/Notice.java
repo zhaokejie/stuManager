@@ -4,9 +4,12 @@ package Service.notice;
 import Dao.MyBatisConnect;
 import Dao.NoticeDaoImpl;
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+
 public class Notice {
 
   /*  #通知表：
@@ -38,7 +41,26 @@ public class Notice {
         return notice;
     }
 
-    public static String getNoticeJSON(Notice notice) throws IOException {   //根据Buidling对象，返回该Building的相关信息(该寝室楼的所有寝室对象,所有学生对象)
+    public static JSONArray getJSONBuildingAllNotice(String BuildingId) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        NoticeDao noticeDao = new NoticeDaoImpl(sqlSession);
+
+        List<Notice> noticeList = noticeDao.getBuildingNoticeAll(BuildingId);
+        myBatisConnect.closeSqlSession();
+        JSONArray jsonList = new JSONArray();
+        for(Notice n:noticeList)
+        {
+            jsonList.put(Notice.getNoticeJSON(n));
+        }
+
+        return jsonList;
+
+    }
+
+    public static JSONObject getNoticeJSON(Notice notice) throws IOException {   //根据Buidling对象，返回该Building的相关信息(该寝室楼的所有寝室对象,所有学生对象)
         //  String buildingId = String.valueOf(building.getID());
         //String buildingId = room.buildingId;
         //  HashMap map = new HashMap();                                                //Building类需要实现什么样的功能？比如根据一个building对象返回对应的room列表或者student列表?
@@ -58,7 +80,7 @@ public class Notice {
 
         //  myBatisConnect.closeSqlSession();
 
-        return json.toString();
+        return json;
 
     }
 

@@ -19,6 +19,8 @@ public interface NoticeDao {
      */
     public List<Notice> getNoticeAll();
 
+    public List<Notice> getBuildingNoticeAll(String buildingId);
+
 
 
 
