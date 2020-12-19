@@ -54,6 +54,7 @@ public class AccessRecord {
         accessRecordDao.insertAccessRecord(accessRecord);
         sqlSession.commit();
         myBatisConnect.closeSqlSession();
+        return true;
     }
 
     public static JSONObject getRecordJSON(AccessRecord accessRecord)

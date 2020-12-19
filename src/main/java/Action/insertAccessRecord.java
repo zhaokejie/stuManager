@@ -51,6 +51,6 @@ public class insertAccessRecord extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost();
+        doPost(request,response);
     }
 }
