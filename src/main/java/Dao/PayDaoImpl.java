@@ -40,7 +40,7 @@ public class PayDaoImpl  implements PayDao {   //把之前定义的接口全部�
     }
 
     @Override
-    public Pay getPayById(HashMap map) {
+    public List<Pay> getPayById(HashMap map) {
         return this.sqlSession.selectOne("PayDao.getPayById",map);
     }
 

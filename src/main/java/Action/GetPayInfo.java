@@ -1,7 +1,7 @@
 package Action;
 
 import Service.feedback.FeedBack;
-import Service.notice.Notice;
+import Service.pay.Pay;
 import Service.user.Student;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,10 +15,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "GetFeedBack",urlPatterns = "/GetFeedBack")
-public class GetFeedBack extends HttpServlet {
+@WebServlet(name = "GetPayInfo",urlPatterns = "/GetPayInfo")
+public class GetPayInfo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);
+    }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //设置编码格式
 
         response.setContentType("text/html;charset=UTF-8");
@@ -32,11 +35,11 @@ public class GetFeedBack extends HttpServlet {
 
         //获取数据库信息
 
-        List<FeedBack> feedBacks = FeedBack.getFeedBack(student.getBuildingId());
-        JSONArray feedBackList = new JSONArray();
-        for(FeedBack fb:feedBacks)
+        List<Pay> pays= Pay.getPayByID(student.getBuildingId(),student.getRoomId());
+        JSONArray payJsonList = new JSONArray();
+        for(Pay p:pays)
         {
-            feedBackList.put(FeedBack.getFeedBackJSON(fb));
+            payJsonList.put(Pay.getRecordJSON(p));
         }
 
         //返回响应数据
@@ -44,14 +47,8 @@ public class GetFeedBack extends HttpServlet {
         JSONObject respJson = new JSONObject();
 
         respJson.put("State","1");
-        respJson.put("feedbacks",feedBackList);
+        respJson.put("pays",payJsonList);
 
         response.getOutputStream().write(respJson.toString().getBytes("UTF-8"));
-
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
     }
 }
