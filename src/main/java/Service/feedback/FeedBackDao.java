@@ -11,7 +11,7 @@ public interface FeedBackDao {
 
     public FeedBack getFeedBackById(HashMap map);
 
-
+    public List<FeedBack>  getFeedBackByBuildingId(String BuildingID);
 
 
     public List<FeedBack> getFeedBackAll();

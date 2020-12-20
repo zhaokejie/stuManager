@@ -21,6 +21,11 @@ public class FeedBackDaoImpl implements FeedBackDao {
         return this.sqlSession.selectOne("FeedBackDao.getFeedBackById", map);
     }
 
+    @Override
+    public List<FeedBack> getFeedBackByBuildingId(String BuildingID) {
+        return this.sqlSession.selectList("getFeedBackBuildingAll",BuildingID);
+    }
+
 
     @Override
     public List<FeedBack> getFeedBackAll() {

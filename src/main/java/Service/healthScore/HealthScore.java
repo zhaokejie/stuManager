@@ -95,7 +95,7 @@ public class HealthScore{
 
         }
         json.put("scoreList",jsonScore);   //把卫生记录表放进json
-
+        json.put("state","1");
 
 
 
@@ -128,7 +128,7 @@ public class HealthScore{
        HealthScoreDao healthScoreDao;
         MyBatisConnect myBatisConnect = new MyBatisConnect();
         SqlSession sqlSession = myBatisConnect.getSqlSession();
-     healthScoreDao = new HealthScoreDaoImpl(sqlSession);
+        healthScoreDao = new HealthScoreDaoImpl(sqlSession);
        healthScoreDao.updateHealthScore(healthScore);
         sqlSession.commit();
 //        Student student = studentDao.getStuInfoById(ID);

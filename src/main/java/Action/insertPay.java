@@ -23,10 +23,10 @@ public class insertPay extends HttpServlet {
 
         //获取前端数据
         HttpSession httpSession = request.getSession();
-        Manager manager = (Manager) httpSession.getAttribute("aManager");
+//        Manager manager = (Manager) httpSession.getAttribute("aManager");
         Pay pay = new Pay();
 
-        pay.setBuildingID(manager.getManager_Building_ID());
+        pay.setBuildingID(request.getParameter("ManagerID"));
         pay.setRoomID(request.getParameter("RoomID"));
         pay.setCost(Float.parseFloat(request.getParameter("Cost")));
         pay.setPayType(request.getParameter("PayType"));

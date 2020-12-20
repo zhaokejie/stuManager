@@ -24,6 +24,11 @@
         select * from StuFeedBack;
         </select>
 
+        <select id="getFeedBackBuildingAll" resultType="Service.feedback.FeedBack">
+        select * from StuFeedBack
+        where buildingId = #{buildingId};
+        </select>
+
         <!--插入数据-->
         <insert id="insertFeedBack" parameterType="Service.feedback.FeedBack">
         INSERT INTO StuFeedBack (

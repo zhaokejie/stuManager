@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class FeedBack {
  /*  #反馈表：
@@ -45,7 +46,7 @@ public class FeedBack {
         return feedBack;
     }
 
-    public static String getFeedBackJSON(FeedBack feedBack) throws IOException {   //根据Buidling对象，返回该Building的相关信息(该寝室楼的所有寝室对象,所有学生对象)
+    public static JSONObject getFeedBackJSON(FeedBack feedBack) throws IOException {   //根据Buidling对象，返回该Building的相关信息(该寝室楼的所有寝室对象,所有学生对象)
       //  String buildingId = String.valueOf(building.getID());
         //String buildingId = room.buildingId;
       //  HashMap map = new HashMap();                                                //Building类需要实现什么样的功能？比如根据一个building对象返回对应的room列表或者student列表?
@@ -66,7 +67,7 @@ public class FeedBack {
 
       //  myBatisConnect.closeSqlSession();
 
-        return json.toString();
+        return json;
 
     }
     public static boolean insertFeedBack(FeedBack feedBack) throws IOException {
@@ -80,6 +81,18 @@ public class FeedBack {
         myBatisConnect.closeSqlSession();
         return true;
     }
+    public static List<FeedBack> getFeedBack(String buildingId) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        FeedBackDao  feedBackDao = new FeedBackDaoImpl(sqlSession);
+        List<FeedBack> feedBackList = feedBackDao.getFeedBackByBuildingId(buildingId);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return feedBackList;
+    }
+
 
     public static boolean updateFeedBackInfo(FeedBack feedBack) throws IOException {
         FeedBackDao feedBackDao;

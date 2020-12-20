@@ -23,7 +23,7 @@ public class updateBuildingInfo extends HttpServlet {
 
         //获取前端传来的数据
         Building building = new Building();
-       building.setID(Integer.parseInt(request.getParameter("ID")));
+        building.setID(Integer.parseInt(request.getParameter("ID")));
         building.setManagerID(Integer.parseInt(request.getParameter("ManagerID")));
         building.setPassword(request.getParameter("Password"));
         building.setBuildingSex(request.getParameter("BuildingSex"));
