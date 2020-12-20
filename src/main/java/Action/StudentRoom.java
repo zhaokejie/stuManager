@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "StudentRoom",urlPatterns = "/StudentRoom")
+@WebServlet(name = "StudentRoom",urlPatterns = "/StudentRoom")   //用来处理前后端的交互
 public class StudentRoom extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession(false);

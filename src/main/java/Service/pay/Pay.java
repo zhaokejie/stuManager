@@ -114,6 +114,34 @@ public class Pay {
 
     }
 
+    public static boolean insertPay(Pay pay) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        PayDao  payDao = new PayDaoImpl(sqlSession);
+
+        payDao.insertPay(pay);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updatePayInfo(Pay pay) throws IOException {
+       PayDao payDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        payDao = new PayDaoImpl(sqlSession);
+       payDao.updatePay(pay);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+
+
+
     public String getBuildingID() {
         return buildingId;
     }

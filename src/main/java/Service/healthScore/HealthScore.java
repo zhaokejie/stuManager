@@ -110,6 +110,34 @@ public class HealthScore{
     }
 
 
+
+    public static boolean insertHealthScore(HealthScore healthScore) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+       HealthScoreDao healthScoreDao = new HealthScoreDaoImpl(sqlSession);
+
+        healthScoreDao.insertHealthScore(healthScore);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateHealthScoreInfo(HealthScore  healthScore) throws IOException {
+       HealthScoreDao healthScoreDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+     healthScoreDao = new HealthScoreDaoImpl(sqlSession);
+       healthScoreDao.updateHealthScore(healthScore);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+
+
     public String getBuildingID() {
         return buildingId;
     }

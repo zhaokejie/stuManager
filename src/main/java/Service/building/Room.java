@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class Room {
+public class Room {     //定义类的属性
 
     private int ID;
     private String buildingId;
@@ -21,7 +21,7 @@ public class Room {
     private float electricityBalance;
     private float waterBalance;
 
-    public static Room getRoomByID(String buildingId,String roomId) throws IOException {
+    public static Room getRoomByID(String buildingId,String roomId) throws IOException {   //通过寝室楼号和房间号返回room对象
         MyBatisConnect myBatisConnect = new MyBatisConnect();
 
         SqlSession sqlSession = myBatisConnect.getSqlSession();
@@ -36,7 +36,7 @@ public class Room {
         return room;
     }
 
-    public static String getRoomJSON(Room room) throws IOException {
+    public static String getRoomJSON(Room room) throws IOException {   //根据room对象，返回该room的相关信息
         String roomId = String.valueOf(room.getID());
         String buildingId = room.buildingId;
         HashMap map = new HashMap();
@@ -49,7 +49,7 @@ public class Room {
         List<Student> stuList = studentDao.getStuInfoByRoomId(map);
         JSONObject json = new JSONObject();
         json.put("roomId",room.getID());
-        json.put("bulidingId",room.buildingId);
+        json.put("buildingId",room.buildingId);
         json.put("healthScore",room.healthScore);
         json.put("electricityBalance",room.electricityBalance);
         json.put(("waterBalance"),room.waterBalance);
@@ -62,7 +62,7 @@ public class Room {
             jsonStu.put(Student.getStuJSON(stu));
 
         }
-        json.put("studentList",jsonStu);
+        json.put("studentList",jsonStu);   //把该寝室的学生列表放进json
 
 
         myBatisConnect.closeSqlSession();
@@ -70,6 +70,32 @@ public class Room {
         return json.toString();
 
     }
+    public static boolean insertRoom(Room room) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        RoomDao roomDao = new RoomDaoImpl(sqlSession);
+
+        roomDao.insertRoom(room);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateRoomInfo(Room room) throws IOException {
+        RoomDao roomDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        roomDao= new RoomDaoImpl(sqlSession);
+        roomDao.updateRoom(room);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+
 
     public int getID() {
         return ID;
@@ -77,6 +103,14 @@ public class Room {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId= buildingId;
     }
 
     public float getHealthScore() {

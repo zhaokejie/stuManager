@@ -69,7 +69,29 @@ public class FeedBack {
         return json.toString();
 
     }
+    public static boolean insertFeedBack(FeedBack feedBack) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
 
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+       FeedBackDao  feedBackDao = new FeedBackDaoImpl(sqlSession);
+       feedBackDao.insertFeedBack(feedBack);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateFeedBackInfo(FeedBack feedBack) throws IOException {
+        FeedBackDao feedBackDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        feedBackDao = new FeedBackDaoImpl(sqlSession);
+        feedBackDao.updateFeedBack(feedBack);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
     public String getBuildingId() {
         return buildingId;
     }

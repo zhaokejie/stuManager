@@ -99,6 +99,36 @@ public class RepairRecord {
     }
 
 
+    public static boolean insertRepairRecord(RepairRecord repairRecord) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+        RepairRecordDao repairRecordDao = new RepairRecordDaoImpl(sqlSession);
+
+        repairRecordDao.insertRepairRecord(repairRecord);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateRepairRecordInfo(RepairRecord repairRecord) throws IOException {
+        RepairRecordDao repairRecordDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        repairRecordDao = new RepairRecordDaoImpl(sqlSession);
+        repairRecordDao.updateRepairRecord(repairRecord);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+
+
+
+
+
 
     public int getStuId() {
         return stuId;

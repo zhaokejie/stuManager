@@ -56,7 +56,17 @@ public class AccessRecord {
         myBatisConnect.closeSqlSession();
         return true;
     }
-
+    public static boolean updateAccessRecordInfo(AccessRecord accessRecord) throws IOException {
+       AccessRecordDao accessRecordDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        accessRecordDao = new AccessRecordDaoImpl(sqlSession);
+        accessRecordDao.updateAccessRecord(accessRecord);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
     public static JSONObject getRecordJSON(AccessRecord accessRecord)
     {
         JSONObject json = new JSONObject();

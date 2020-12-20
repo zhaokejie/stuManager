@@ -5,12 +5,12 @@ import Service.user.Account;
 import java.util.HashMap;
 import java.util.List;
 
-public interface RoomDao {
+public interface RoomDao {   //写增删改查的接口
 
 
     public Room getRoomById(HashMap map);
 
-
+   // public Room getRoomByBuildingId();
 
 
     /**

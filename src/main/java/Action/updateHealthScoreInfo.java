@@ -1,18 +1,19 @@
 package Action;
 
+import Service.healthScore.HealthScore;
 import Service.user.Student;
 import org.json.JSONObject;
-import org.json.JSONPointer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.geom.Arc2D;
 import java.io.IOException;
 
-@WebServlet(name = "updateStudentInfo",urlPatterns = "/updateStudentInfo")
-public class updateStudentInfo extends HttpServlet {
+@WebServlet(name = "updateHealthScoreInfo",urlPatterns = "/updateHealthScoreInfo")
+public class updateHealthScoreInfo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //设置编码格式
@@ -22,19 +23,15 @@ public class updateStudentInfo extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         //获取前端传来的数据
-        Student student = new Student();
-        student.setId(Integer.parseInt(request.getParameter("ID")));
-        student.setName(request.getParameter("name"));
-        student.setClassId(request.getParameter("classId"));
-        student.setMobilePhone(request.getParameter("mobilePhone"));
-        student.setBuildingId(request.getParameter("buildingId"));
-        student.setRoomId(request.getParameter("roomId"));
-        student.setHomeAddress(request.getParameter("userhome"));
-        student.setEmail(request.getParameter("useremail"));
+        HealthScore healthScore = new HealthScore();
+        healthScore.setBuildingId(request.getParameter("BuildingId"));
+        healthScore.setRoomId(request.getParameter("RoomId"));
+        healthScore.setScore(Float.parseFloat(request.getParameter("Score")));
+        healthScore.setRecordDate(request.getParameter("RecordDate"));
 
         //存入数据库
 
-        Student.updateStuInfo(student);
+        HealthScore.updateHealthScoreInfo(healthScore);
 
         //返回响应数据
 

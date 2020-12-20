@@ -1,8 +1,8 @@
 package Action;
 
+import  Service.accessRecord.AccessRecord;
 import Service.user.Student;
 import org.json.JSONObject;
-import org.json.JSONPointer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "updateStudentInfo",urlPatterns = "/updateStudentInfo")
-public class updateStudentInfo extends HttpServlet {
+@WebServlet(name = "updateAccessRecordInfo",urlPatterns = "/updateAccessRecordInfo")
+public class updateAccessRecordInfo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //设置编码格式
@@ -22,19 +22,16 @@ public class updateStudentInfo extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         //获取前端传来的数据
-        Student student = new Student();
-        student.setId(Integer.parseInt(request.getParameter("ID")));
-        student.setName(request.getParameter("name"));
-        student.setClassId(request.getParameter("classId"));
-        student.setMobilePhone(request.getParameter("mobilePhone"));
-        student.setBuildingId(request.getParameter("buildingId"));
-        student.setRoomId(request.getParameter("roomId"));
-        student.setHomeAddress(request.getParameter("userhome"));
-        student.setEmail(request.getParameter("useremail"));
+        AccessRecord accessRecord = new AccessRecord();
+        accessRecord.setStuID(Integer.parseInt(request.getParameter("StuID")));
+        accessRecord.setOutDate(request.getParameter("OutDate"));
+        accessRecord.setComeDate(request.getParameter("ComeDate"));
+        accessRecord.setOutReason(request.getParameter("OutReason"));
+
 
         //存入数据库
 
-        Student.updateStuInfo(student);
+        AccessRecord.updateAccessRecordInfo(accessRecord);
 
         //返回响应数据
 

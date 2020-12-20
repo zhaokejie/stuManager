@@ -57,15 +57,11 @@ public class Building {
         MyBatisConnect myBatisConnect = new MyBatisConnect();
 
        // SqlSession sqlSession = myBatisConnect.getSqlSession();
-
-        JSONObject json = new JSONObject();
+         JSONObject json = new JSONObject();
         json.put("buildingId",building.getID());
         json.put("ManagerId",building.ManagerID);
         json.put("password",building.password);
         json.put("buildingSex",building.BuildingSex);
-
-
-
 
         myBatisConnect.closeSqlSession();
 
@@ -74,7 +70,30 @@ public class Building {
     }
 
 
+    public static boolean insertBuilding(Building building) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
 
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+       BuildingDao buildingDao = new BuildingDaoImpl(sqlSession);
+
+        buildingDao.insertBuilding(building);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateBuildingInfo(Building building) throws IOException {
+        BuildingDao buildingDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        buildingDao = new BuildingDaoImpl(sqlSession);
+         buildingDao.updateBuilding(building);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
 
 
     public int getID() {

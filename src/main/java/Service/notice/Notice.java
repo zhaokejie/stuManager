@@ -84,6 +84,33 @@ public class Notice {
 
     }
 
+
+
+    public static boolean insertNotice(Notice notice) throws IOException {
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+
+       NoticeDao noticeDao = new NoticeDaoImpl(sqlSession);
+
+        noticeDao.insertNotice(notice);
+        sqlSession.commit();
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
+    public static boolean updateNoticeInfo(Notice notice) throws IOException {
+        NoticeDao noticeDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+       noticeDao = new NoticeDaoImpl(sqlSession);
+       noticeDao.updateNotice(notice);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
     public String getBuildingId() {
         return buildingId;
     }
