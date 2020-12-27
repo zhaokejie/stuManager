@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!-- Mapper层实现具体的增删改查操作    -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="BuyWaterDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="getBuyWaterById" resultType="Service.buyWater.BuyWater">
+
+        select * from StuBuyWater  where  buildingId = #{buildingId} and roomId = #{roomId} ;
+         <!--应该实现何种功能,根据哪几个参数来查找费用? -->
+    </select>
+
+
+    <select id="getBuyWaterAll" resultType="Service.buyWater.BuyWater">
+        select * from StuBuyWater  where buildingId = #{buildingId};
+    </select>
+
+    <!--插入数据-->
+    <insert id="insertBuyWater" parameterType="Service.buyWater.BuyWater">
+        INSERT INTO StuBuyWater(
+          buildingId,
+          roomId,
+          cost,
+          waterType,
+          buyNumber,
+          buyDate,
+          Tel
+        )
+        VALUES
+        (
+          #{buildingId},
+          #{roomId},
+          #{cost},
+          #{waterType},
+          #{buyNumber},
+          #{buyDate},
+          #{Tel}
+        );
+    </insert>
+
+    <update id="updateBuyWater" parameterType="Service.buyWater.BuyWater">
+        UPDATE StuBuyWater
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buildingId!=null">buildingId = #{buildingId},</if>
+            <if test="roomId!=null">roomId = #{roomId},</if>
+            <if test="cost!=null">cost = #{cost},</if>
+            <if test="WaterType!=null">WaterType = #{WaterType},</if>
+            <if test="buyDate!=null">buyWaterDate = #{buyDate}</if>
+        </trim>
+        WHERE
+        (buildingId = #{buildingId} and roomId = #{roomId});
+    </update>
+
+    <delete id="deleteBuyWater" >
+        delete from StuBuyWater where buildingId = #{buildingId} and roomId = #{roomId} and buyDate = #{buyDate}
+    </delete>
+</mapper>

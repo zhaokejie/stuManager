@@ -66,5 +66,6 @@
         <mapper resource="Mappers/PayMapper.xml"/>
         <mapper resource="Mappers/AccessRecordMapper.xml"/>
         <mapper resource="Mappers/RepairRecordMapper.xml"/>
+        <mapper resource="Mappers/BuyWater.xml"/>
     </mappers>
 </configuration>
