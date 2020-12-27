@@ -17,7 +17,7 @@
        payDate as payDate
        from
         StuPay
-       where roomId = #{roomId} and buildingId = #{buildingId} and payType=#{payType} and payDate=#{payDate};   <!--应该实现何种功能,根据哪几个参数来查找费用? -->
+       where roomId = #{roomId} and buildingId = #{buildingId} ;  <!--应该实现何种功能,根据哪几个参数来查找费用? -->
    </select>
 
 

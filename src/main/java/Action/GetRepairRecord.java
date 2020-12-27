@@ -1,7 +1,7 @@
 package Action;
 
-import Service.feedback.FeedBack;
-import Service.notice.Notice;
+import Service.pay.Pay;
+import Service.repairRecord.RepairRecord;
 import Service.user.Student;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "GetFeedBack",urlPatterns = "/GetFeedBack")
-public class GetFeedBack extends HttpServlet {
+@WebServlet(name = "GetRepairRecord",urlPatterns = "/GetRepairRecord")
+public class GetRepairRecord extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //设置编码格式
@@ -32,11 +32,12 @@ public class GetFeedBack extends HttpServlet {
 
         //获取数据库信息
 
-        List<FeedBack> feedBacks = FeedBack.getFeedBack(student.getBuildingId());
-        JSONArray feedBackList = new JSONArray();
-        for(FeedBack fb:feedBacks)
+        List<RepairRecord> repairRecords= RepairRecord.getRepairRecordByID(student.getBuildingId(),student.getRoomId());
+        JSONArray repairJsonList = new JSONArray();
+        for(RepairRecord r:repairRecords)
         {
-            feedBackList.put(FeedBack.getFeedBackJSON(fb));
+            JSONObject temp = RepairRecord.getRecordJSON(r);
+            repairJsonList.put(RepairRecord.getRecordJSON(r));
         }
 
         //返回响应数据
@@ -44,14 +45,14 @@ public class GetFeedBack extends HttpServlet {
         JSONObject respJson = new JSONObject();
 
         respJson.put("State","1");
-        respJson.put("feedbacks",feedBackList);
+        respJson.put("repairList",repairJsonList);
 
         response.getOutputStream().write(respJson.toString().getBytes("UTF-8"));
-
-
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
+
     }
 }

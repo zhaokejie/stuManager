@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet(name = "insertFeedBack",urlPatterns = "/insertFeedBack")
 public class insertFeedBack extends HttpServlet {
@@ -28,7 +30,10 @@ public class insertFeedBack extends HttpServlet {
        FeedBack feedBack = new FeedBack();
 
         feedBack.setBuildingId(student.getBuildingId());
-        feedBack.setReleaseDate(request.getParameter("ReleaseDate"));
+//        feedBack.setReleaseDate(request.getParameter("ReleaseDate"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
+        feedBack.setReleaseDate(sdf.format(new Date()));
         feedBack.setPublisher(request.getParameter("Publisher"));
         feedBack.setContent(request.getParameter("Content"));
 

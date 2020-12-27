@@ -1,9 +1,7 @@
 package Action;
 
 import Service.accessRecord.AccessRecord;
-import Service.building.Room;
-import Service.pay.Pay;
-import Service.user.Manager;
+import Service.repairRecord.RepairRecord;
 import Service.user.Student;
 import org.json.JSONObject;
 
@@ -14,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@WebServlet(name = "insertPay",urlPatterns = "/insertPay")
-public class insertPay extends HttpServlet {
+@WebServlet(name = "insertRepairRecord",urlPatterns = "/insertRepairRecord")
+public class insertRepairRecord extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //设置编码格式和参数
         response.setCharacterEncoding("utf-8");
@@ -24,21 +24,19 @@ public class insertPay extends HttpServlet {
 
         //获取前端数据
         HttpSession httpSession = request.getSession();
-//        Manager manager = (Manager) httpSession.getAttribute("aManager");
         Student student = (Student) httpSession.getAttribute("aStudent");
-        Pay pay = new Pay();
+        RepairRecord repairRecord = new RepairRecord();
 
-        pay.setBuildingID(request.getParameter("buildingId"));
-        pay.setRoomID(request.getParameter("RoomID"));
-        pay.setCost(Float.parseFloat(request.getParameter("Cost")));
-        pay.setPayType(request.getParameter("PayType"));
-        pay.setPayDate(request.getParameter("PayDate"));
-
-
+        repairRecord.setStuId(student.getId());
+        repairRecord.setBuildingId(student.getBuildingId());
+        repairRecord.setRoomID(student.getRoomId());
+        repairRecord.setReason(request.getParameter("reason"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        repairRecord.setRecordDate(sdf.format(new Date()));
 
         //将数据存入数据库
         String state = "";
-        if(Pay.insertPay(pay))
+        if(RepairRecord.insertRepairRecord(repairRecord))
         {
             state = "1";
         }
@@ -46,7 +44,6 @@ public class insertPay extends HttpServlet {
         {
             state = "0";
         }
-        Room.changeBanlance(student,pay.getPayType(),pay.getCost());
 
 
         //返回相应数据
@@ -54,7 +51,6 @@ public class insertPay extends HttpServlet {
         JSONObject respJson = new JSONObject();
         respJson.put("state",state);
         response.getOutputStream().write(respJson.toString().getBytes("UTF-8"));
-
 
     }
 

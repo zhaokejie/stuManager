@@ -31,7 +31,7 @@ public class Pay {
     private String payType;
     private String payDate;
 
-    public static Pay getPayByID(String buildingId, String roomId,String payType,String payDate) throws IOException {   //通过寝室楼号和房间号,缴费类型和缴费日期返回一个缴费记录
+    public static List<Pay> getPayByID(String buildingId, String roomId) throws IOException {   //通过寝室楼号和房间号,缴费类型和缴费日期返回一个缴费记录
         MyBatisConnect myBatisConnect = new MyBatisConnect();
 
         SqlSession sqlSession = myBatisConnect.getSqlSession();
@@ -41,11 +41,10 @@ public class Pay {
         HashMap map = new HashMap();
         map.put("roomId",roomId);
         map.put("buildingId",buildingId);
-        map.put("payType",payType);
-        map.put("payDate",payDate);
-        Pay pay = payDao.getPayById(map);
+
+        List<Pay> payList = payDao.getPayById(map);
         myBatisConnect.closeSqlSession();
-        return pay;
+        return payList;
     }
 
     public static List<Pay> getPayAll(String buildingId, String roomId) throws IOException {   //通过寝室楼号和房间号返回缴费记录的集合

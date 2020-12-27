@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PayDao {
 
-    public Pay getPayById(HashMap map);   //根据buildingID和releaseDate来返回一个notice对象
+    public List<Pay> getPayById(HashMap map);   //根据buildingID和releaseDate来返回一个notice对象
 
     // public Room getRoomByBuildingId();
 

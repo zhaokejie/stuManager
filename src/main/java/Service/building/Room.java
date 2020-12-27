@@ -95,6 +95,31 @@ public class Room {     //定义类的属性
         return true;
     }
 
+    public static  boolean changeBanlance(Student student,String type,float num) throws IOException {
+        RoomDao roomDao;
+        MyBatisConnect myBatisConnect = new MyBatisConnect();
+        SqlSession sqlSession = myBatisConnect.getSqlSession();
+        roomDao= new RoomDaoImpl(sqlSession);
+        HashMap map = new HashMap();
+        map.put("roomId",student.getRoomId());
+        map.put("buildingId",student.getBuildingId());
+        Room roomOld = roomDao.getRoomById(map);
+
+        if (type.compareTo("water") == 0)
+        {
+            roomOld.setWaterBalance(roomOld.getWaterBalance()+num);
+        }
+        else if(type.compareTo("electricity") == 0)
+        {
+            roomOld.setElectricityBalance(roomOld.getElectricityBalance()+num);
+        }
+        roomDao.updateRoom(roomOld);
+        sqlSession.commit();
+//        Student student = studentDao.getStuInfoById(ID);
+        myBatisConnect.closeSqlSession();
+        return true;
+    }
+
 
 
     public int getID() {
