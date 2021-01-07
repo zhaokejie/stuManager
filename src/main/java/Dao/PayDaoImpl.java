@@ -41,7 +41,7 @@ public class PayDaoImpl  implements PayDao {   //把之前定义的接口全部�
 
     @Override
     public List<Pay> getPayById(HashMap map) {
-        return this.sqlSession.selectOne("PayDao.getPayById",map);
+        return this.sqlSession.selectList("PayDao.getPayById",map);
     }
 
 }

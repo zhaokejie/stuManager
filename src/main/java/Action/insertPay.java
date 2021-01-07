@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet(name = "insertPay",urlPatterns = "/insertPay")
 public class insertPay extends HttpServlet {
@@ -28,11 +30,12 @@ public class insertPay extends HttpServlet {
         Student student = (Student) httpSession.getAttribute("aStudent");
         Pay pay = new Pay();
 
-        pay.setBuildingID(request.getParameter("buildingId"));
-        pay.setRoomID(request.getParameter("RoomID"));
-        pay.setCost(Float.parseFloat(request.getParameter("Cost")));
-        pay.setPayType(request.getParameter("PayType"));
-        pay.setPayDate(request.getParameter("PayDate"));
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        pay.setBuildingID(student.getBuildingId());
+        pay.setRoomID(student.getRoomId());
+        pay.setCost(Float.parseFloat(request.getParameter("cost")));
+        pay.setPayType(request.getParameter("payType"));
+        pay.setPayDate(format.format(new Date()));
 
 
 

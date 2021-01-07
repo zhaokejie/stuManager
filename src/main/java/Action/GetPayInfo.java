@@ -28,7 +28,7 @@ public class GetPayInfo extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
 
-        //获取前端传来的数据
+        //获取前端传来的数据，通过Cookie中的Session信息获取操作者
         HttpSession httpSession = request.getSession();
         Student student = (Student) httpSession.getAttribute("aStudent");
 

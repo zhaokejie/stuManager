@@ -1,6 +1,4 @@
 package Dao;
-
-
 import Service.user.Account;
 import Service.user.AccountDao;
 import Service.user.Student;
@@ -9,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.HashMap;
 import java.util.List;
-
 public class StudentDaoImpl implements StudentDao {
     public SqlSession sqlSession;
 
@@ -25,6 +22,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> getStuInfoAll() {
+
         return this.sqlSession.selectList("StudentDao.getStuInfoAll");
     }
 
@@ -37,6 +35,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void insertStuInfo(Student student) {
+
         this.sqlSession.insert("StudentDao.insertStuInfo",student);
     }
 

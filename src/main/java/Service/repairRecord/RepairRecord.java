@@ -30,6 +30,15 @@ public class RepairRecord {
     private String buildingId;
     private String roomId;
     private String reason;
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
     private String recordDate;
 
     public static List<RepairRecord> getRepairRecordByID(String buildingId, String roomId) throws IOException {   //通过寝室楼号和房间号返回报修记录的集合

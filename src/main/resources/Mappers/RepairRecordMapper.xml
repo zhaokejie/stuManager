@@ -32,7 +32,7 @@
           buildingId,
           roomId,
           reason,
-          RecordDate
+          recordDate
         )
         VALUES
         (
@@ -40,7 +40,7 @@
           #{buildingId},
           #{roomId},
           #{reason},
-          #{RecordDate}
+          #{recordDate}
         );
     </insert>
 

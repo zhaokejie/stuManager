@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "updateRoomInfo",urlPatterns = "/updateRoomInfo")
@@ -20,10 +21,11 @@ public class updateRoomInfo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
-
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("aStudent");
         //获取前端传来的数据
        Room room = new Room();
-        room.setID(Integer.parseInt(request.getParameter("ID")));
+        room.setID(student.getId());
        room.setHealthScore(Float.parseFloat(request.getParameter("HealthScore")));
         room.setElectricityBalance(Float.parseFloat(request.getParameter("ElectricityBalance")));
         room.setWaterBalance(Float.parseFloat(request.getParameter("WaterBalance")));

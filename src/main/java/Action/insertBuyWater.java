@@ -31,10 +31,10 @@ public class insertBuyWater extends HttpServlet {
         BuyWater buyWater = new BuyWater();
 
         buyWater.setBuildingID(request.getParameter("buildingId"));
-        buyWater.setRoomID(request.getParameter("RoomID"));
+        buyWater.setRoomID(request.getParameter("roomId"));
         buyWater.setCost(Float.parseFloat(request.getParameter("cost")));
-        buyWater.setWaterType(request.getParameter("PayType"));
-        buyWater.setBuyNumber(Integer.parseInt(request.getParameter("PayQuantity")));
+        buyWater.setWaterType(request.getParameter("payType"));
+        buyWater.setBuyNumber(Integer.parseInt(request.getParameter("payQuantity")));
 
        /* buyWater.setBuildingID("2");
         buyWater.setRoomID("206");
