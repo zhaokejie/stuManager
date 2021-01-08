@@ -32,8 +32,8 @@ public class updateStudentInfo extends HttpServlet {
         student.setMobilePhone(request.getParameter("mobilePhone"));
         student.setBuildingId(request.getParameter("buildingId"));
         student.setRoomId(request.getParameter("roomId"));
-        student.setHomeAddress(request.getParameter("homeAdress"));
-        student.setEmail(request.getParameter("Email"));
+        student.setHomeAddress(request.getParameter("userhome"));
+        student.setEmail(request.getParameter("useremail"));
 
         //存入数据库
 
